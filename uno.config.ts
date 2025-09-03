@@ -37,7 +37,27 @@ export default defineConfig({
     },
   ],
   // 动态图标需要在这里配置，或者写在vue页面中注释掉
-  safelist: ['i-carbon-code'],
+  safelist: [
+    'i-carbon-code',
+    'i-carbon-manufacturing',
+    'i-carbon-inventory-management',
+    'i-carbon-switch',
+    'i-carbon-calendar',
+    'i-carbon-flow',
+    'i-carbon-checkmark-filled',
+    'i-carbon-tools',
+    'i-carbon-document',
+    'i-carbon-chart-line',
+    'i-carbon-play-filled',
+    'i-carbon-pause-filled',
+    'i-carbon-warning-filled',
+    'i-carbon-checkmark',
+    'i-carbon-add-alt',
+    'i-carbon-subtract-alt',
+    'i-carbon-inventory',
+    'i-carbon-scan',
+    'i-carbon-location',
+  ],
   rules: [
     [
       'p-safe',

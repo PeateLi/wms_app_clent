@@ -10,32 +10,13 @@ definePage({
   // 使用 type: "home" 属性设置首页，其他页面不需要设置，默认为page
   type: 'home',
   style: {
-    // 'custom' 表示开启自定义导航栏，默认 'default'
-    navigationStyle: 'custom',
-    navigationBarTitleText: '首页',
+    // 'default' 表示使用默认导航栏，这样底部tabbar会显示
+    navigationStyle: 'default',
+    navigationBarTitleText: 'MOM制造运营管理系统',
   },
 })
 
-// 获取屏幕边界到安全区域距离
-let safeAreaInsets
-let systemInfo
 
-// #ifdef MP-WEIXIN
-systemInfo = uni.getWindowInfo()
-safeAreaInsets = systemInfo.safeArea
-  ? {
-      top: systemInfo.safeArea.top,
-      right: systemInfo.windowWidth - systemInfo.safeArea.right,
-      bottom: systemInfo.windowHeight - systemInfo.safeArea.bottom,
-      left: systemInfo.safeArea.left,
-    }
-  : null
-// #endif
-
-// #ifndef MP-WEIXIN
-systemInfo = uni.getSystemInfoSync()
-safeAreaInsets = systemInfo.safeAreaInsets
-// #endif
 
 const tokenStore = useTokenStore()
 const userStore = useUserStore()
@@ -71,14 +52,22 @@ function logout() {
     },
   })
 }
+
+function navigateToPlatform(platform: string) {
+  if (platform === 'wms') {
+    uni.navigateTo({ url: '/pages/wms/index' })
+  } else if (platform === 'mes') {
+    uni.navigateTo({ url: '/pages/mes/index' })
+  }
+}
+
+function showPlatformSwitcher() {
+  uni.navigateTo({ url: '/pages/platform-switcher' })
+}
 </script>
 
 <template>
-  <view class="bg-white px-4 pt-2" :style="{ marginTop: `${safeAreaInsets?.top}px` }">
-    <!-- 自定义导航栏 -->
-    <view class="custom-navbar">
-      <text class="navbar-title">WMS管理系统</text>
-    </view>
+  <view class="bg-white px-4 pt-2">
 
     <!-- 用户信息区域 -->
     <view class="user-section">
@@ -100,45 +89,33 @@ function logout() {
       </view>
     </view>
 
-    <!-- 功能区域 -->
-    <view class="function-section">
-      <text class="section-title">系统功能</text>
-      <view class="function-grid">
-        <view class="function-item">
-          <uni-icons type="list" size="40" color="#667eea" />
-          <text class="function-name">库存管理</text>
+    <!-- 平台切换区域 -->
+    <view class="platform-section">
+      <text class="section-title">选择平台</text>
+      <view class="platform-grid">
+        <view class="platform-item" @click="navigateToPlatform('wms')">
+          <view class="platform-icon wms-icon">
+            <uni-icons type="list" size="24" color="#ffffff" />
+          </view>
+          <text class="platform-name">WMS</text>
+          <text class="platform-desc">仓库管理系统</text>
         </view>
-        <view class="function-item">
-          <uni-icons type="shop" size="40" color="#667eea" />
-          <text class="function-name">订单管理</text>
-        </view>
-        <view class="function-item">
-          <uni-icons type="gear" size="40" color="#667eea" />
-          <text class="function-name">系统设置</text>
-        </view>
-        <view class="function-item">
-          <uni-icons type="chat" size="40" color="#667eea" />
-          <text class="function-name">消息中心</text>
+        <view class="platform-item" @click="navigateToPlatform('mes')">
+          <view class="platform-icon mes-icon">
+            <uni-icons type="gear" size="24" color="#ffffff" />
+          </view>
+          <text class="platform-name">MES</text>
+          <text class="platform-desc">制造执行系统</text>
         </view>
       </view>
     </view>
+
+
   </view>
 </template>
 
 <style lang="scss" scoped>
-.custom-navbar {
-  height: 88rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 40rpx;
-  
-  .navbar-title {
-    font-size: 36rpx;
-    font-weight: bold;
-    color: #333;
-  }
-}
+
 
 .user-section {
   margin-bottom: 60rpx;
@@ -209,7 +186,9 @@ function logout() {
   }
 }
 
-.function-section {
+.platform-section {
+  margin-bottom: 60rpx;
+  
   .section-title {
     display: block;
     font-size: 32rpx;
@@ -218,31 +197,62 @@ function logout() {
     margin-bottom: 30rpx;
   }
   
-  .function-grid {
+  .platform-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30rpx;
     
-    .function-item {
+    .platform-item {
       background: #fff;
-      border-radius: 16rpx;
+      border-radius: 20rpx;
       padding: 40rpx 20rpx;
       text-align: center;
-      box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
       
       &:active {
-        transform: translateY(2rpx);
-        box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
+        transform: translateY(4rpx);
+        box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.15);
       }
       
-      .function-name {
+      .platform-icon {
+        width: 80rpx;
+        height: 80rpx;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20rpx;
+        
+        .uni-icons {
+          font-size: 40rpx;
+        }
+        
+        &.wms-icon {
+          background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+        }
+        
+        &.mes-icon {
+          background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+        }
+      }
+      
+      .platform-name {
         display: block;
-        font-size: 26rpx;
+        font-size: 32rpx;
+        font-weight: bold;
         color: #333;
-        margin-top: 20rpx;
+        margin-bottom: 8rpx;
+      }
+      
+      .platform-desc {
+        display: block;
+        font-size: 24rpx;
+        color: #666;
       }
     }
   }
 }
+
+
 </style>

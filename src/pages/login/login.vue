@@ -79,7 +79,7 @@ const handleLogin = async () => {
   loading.value = true
   
   try {
-    await tokenStore.login(loginForm.value)
+    // await tokenStore.login(loginForm.value)
     
     // 登录成功后的跳转逻辑
     if (redirectUrl.value) {

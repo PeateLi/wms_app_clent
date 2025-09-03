@@ -1,6 +1,6 @@
 {
   "globalStyle": {
-    "navigationStyle": "default",
+    "navigationStyle": "custom",
     "navigationBarTitleText": "unibest",
     "navigationBarBackgroundColor": "#f8f8f8",
     "navigationBarTextStyle": "black",
@@ -54,13 +54,6 @@
       }
     },
     {
-      "path": "pages/about/about",
-      "type": "page",
-      "style": {
-        "navigationBarTitleText": "关于"
-      }
-    },
-    {
       "path": "pages/login/login",
       "type": "page",
       "style": {
@@ -78,7 +71,7 @@
       "path": "pages/me/me",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "我的"
+        "navigationStyle": "custom"
       }
     },
     {
@@ -104,7 +97,7 @@
           "path": "demo/index",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "分包页面"
+            "navigationStyle": "custom"
           }
         }
       ]

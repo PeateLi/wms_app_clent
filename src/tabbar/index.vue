@@ -3,6 +3,19 @@ import type { CustomTabBarItem } from './config'
 import { customTabbarEnable, needHideNativeTabbar, tabbarCacheEnable } from './config'
 import { tabbarList, tabbarStore } from './store'
 
+// 获取当前页面路径
+const currentPage = ref('')
+onLoad(() => {
+  const pages = getCurrentPages()
+  const current = pages[pages.length - 1]
+  currentPage.value = current.route || ''
+})
+
+// 计算是否显示 tabbar（只在 index 页面显示）
+const shouldShowTabbar = computed(() => {
+  return currentPage.value === 'pages/index/index'
+})
+
 // #ifdef MP-WEIXIN
 // 将自定义节点设置成虚拟的（去掉自定义组件包裹层），更加接近Vue组件的表现，能更好的使用flex属性
 defineOptions({
@@ -69,7 +82,7 @@ function getImageByIndex(index: number, item: CustomTabBarItem) {
 </script>
 
 <template>
-  <view v-if="customTabbarEnable" class="h-50px pb-safe">
+  <view v-if="customTabbarEnable && shouldShowTabbar" class="h-50px pb-safe">
     <view class="border-and-fixed bg-white" @touchmove.stop.prevent>
       <view class="h-50px flex items-center">
         <view

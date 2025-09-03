@@ -61,14 +61,14 @@
       "path": "pages/login/login",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "登录"
+        "navigationStyle": "custom"
       }
     },
     {
       "path": "pages/login/register",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "注册"
+        "navigationStyle": "custom"
       }
     },
     {

@@ -13,7 +13,8 @@ onLoad(() => {
 
 // 计算是否显示 tabbar（只在 index 页面显示）
 const shouldShowTabbar = computed(() => {
-  return currentPage.value === 'pages/index/index'
+  const tabbarPages = ['pages/index/index','pages/me/me']
+  return tabbarPages.includes(currentPage.value)
 })
 
 // #ifdef MP-WEIXIN

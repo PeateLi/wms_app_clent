@@ -1,8 +1,3 @@
-/**
- * by 菲鸽 on 2025-08-19
- * 路由拦截，通常也是登录拦截
- * 黑白名单的配置，请看 config.ts 文件， EXCLUDE_PAGE_LIST
- */
 import { useTokenStore } from '@/store/token'
 import { tabbarStore } from '@/tabbar/store'
 import { getLastPage, parseUrlToObj } from '@/utils/index'
